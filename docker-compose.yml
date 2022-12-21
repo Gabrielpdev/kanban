@@ -1,0 +1,28 @@
+version: "3"
+services:
+  kanban-back:
+    build:
+      dockerfile: Dockerfile
+      context: "./BACK"
+    ports:
+      - 5000:5000
+    environment:
+      - JWT_SECRET:4ee01ac6a4e44dfaa182e92abbad7f79
+      - DEFAULT_LOGIN:letscode
+      - DEFAULT_PASSWORD:lets@123
+    # container_name: kanban-back
+    # environment:
+
+  kanban-front:
+    # container_name: kanban-front
+    build:
+      dockerfile: Dockerfile
+      context: "./FRONT"
+    ports:
+      - 5173:5173
+    links:
+      - "kanban-back:be"
+    environment:
+      - VITE_API_URL:http://127.0.0.1:5000
+      - VITE_LOGIN:letscode
+      - VITE_PASSWORD:lets@123
